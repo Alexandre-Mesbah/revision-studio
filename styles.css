@@ -20,8 +20,14 @@
   box-sizing: border-box;
 }
 
+html {
+  min-height: 100%;
+  background: #000;
+}
+
 body {
   min-height: 100vh;
+  min-height: 100svh;
   margin: 0;
   color: var(--ink);
   font-family: "Plus Jakarta Sans", sans-serif;
@@ -1002,5 +1008,242 @@ h3,
     opacity: 1;
     filter: blur(0);
     transform: translateY(0) scale(1);
+  }
+}
+
+@media (max-width: 1180px) {
+  .app-shell {
+    grid-template-columns: 1fr;
+    gap: 14px;
+    width: min(100% - 24px, 1040px);
+    min-height: auto;
+    margin: 12px auto;
+  }
+
+  .sidebar {
+    position: static;
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) 180px;
+    align-items: center;
+    gap: 14px;
+    height: auto;
+    padding: 14px;
+  }
+
+  .brand p {
+    white-space: nowrap;
+  }
+
+  .view-tabs {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 8px;
+  }
+
+  .view-tab {
+    min-height: 48px;
+    padding: 10px 12px;
+    text-align: center;
+  }
+
+  .day-card {
+    margin: 0;
+    padding: 12px;
+  }
+
+  .day-card strong {
+    margin: 6px 0 8px;
+    font-size: 1.65rem;
+  }
+
+  .workspace {
+    min-height: auto;
+    padding: 18px;
+  }
+
+  .workspace-header {
+    margin-bottom: 16px;
+  }
+
+  h1 {
+    max-width: 20ch;
+    font-size: clamp(2.35rem, 5vw, 3.4rem);
+    line-height: 0.98;
+  }
+
+  .timer-card,
+  .settings-panel {
+    padding: 18px;
+  }
+
+  .primary-timer {
+    min-height: auto;
+  }
+
+  .progress-ring {
+    width: min(100%, 300px);
+    margin: 22px auto 18px;
+  }
+
+  .time-stack span {
+    font-size: clamp(2.55rem, 5vw, 3.45rem);
+  }
+
+  .pomodoro-time {
+    margin: 44px 0;
+    font-size: clamp(4rem, 12vw, 7rem);
+  }
+
+  .mini-card {
+    min-height: 128px;
+    padding: 16px;
+  }
+}
+
+@media (min-width: 900px) and (max-width: 1180px) {
+  .timer-layout,
+  .pomodoro-grid,
+  .storage-grid {
+    grid-template-columns: minmax(0, 1.1fr) minmax(250px, 0.9fr);
+  }
+
+  .stack-panel {
+    gap: 12px;
+  }
+}
+
+@media (min-width: 621px) and (max-width: 899px) {
+  .sidebar {
+    grid-template-columns: 1fr;
+  }
+
+  .brand {
+    justify-content: center;
+  }
+
+  .day-card {
+    display: grid;
+    grid-template-columns: auto auto minmax(140px, 1fr);
+    align-items: center;
+    gap: 12px;
+  }
+
+  .day-card strong {
+    margin: 0;
+  }
+
+  .meter {
+    min-width: 0;
+  }
+
+  .timer-layout,
+  .pomodoro-grid,
+  .storage-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .workspace-header {
+    align-items: center;
+  }
+}
+
+@media (min-width: 760px) and (max-width: 899px) {
+  .timer-layout,
+  .pomodoro-grid {
+    grid-template-columns: minmax(0, 1.05fr) minmax(230px, 0.95fr);
+  }
+
+  .progress-ring {
+    width: min(100%, 260px);
+  }
+
+  .time-stack span {
+    font-size: clamp(2.25rem, 4.8vw, 2.9rem);
+  }
+
+  .mini-card {
+    min-height: 112px;
+  }
+
+  .mini-card strong {
+    font-size: clamp(1.9rem, 5vw, 2.7rem);
+  }
+}
+
+@media (max-width: 620px) {
+  .app-shell {
+    width: min(100% - 20px, 560px);
+    margin: 10px auto;
+  }
+
+  .sidebar,
+  .workspace {
+    border-radius: 22px;
+    padding: 16px;
+  }
+
+  .sidebar {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .brand {
+    justify-content: flex-start;
+  }
+
+  .view-tabs {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .view-tab {
+    min-height: 46px;
+    padding: 10px 8px;
+  }
+
+  .day-card {
+    padding: 14px;
+  }
+
+  .day-card strong {
+    margin: 8px 0 10px;
+    font-size: 2rem;
+  }
+
+  .workspace-header,
+  .checklist-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .workspace-header {
+    margin-bottom: 14px;
+  }
+
+  h1 {
+    max-width: 12ch;
+    font-size: 2.35rem;
+  }
+
+  .timer-layout,
+  .pomodoro-grid,
+  .storage-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .task-form,
+  .step-form,
+  .storage-actions,
+  .footer-actions {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .task-form button,
+  .step-form button,
+  .storage-actions button,
+  .file-button,
+  .footer-actions button {
+    justify-content: center;
+    width: 100%;
   }
 }
