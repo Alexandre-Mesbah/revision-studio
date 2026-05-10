@@ -1247,3 +1247,115 @@ h3,
     width: 100%;
   }
 }
+
+/* Persistent top navigation: replaces the old side rail on every viewport. */
+.app-shell {
+  grid-template-columns: 1fr;
+  gap: 14px;
+  width: min(100% - 24px, 1120px);
+  min-height: auto;
+  margin: 12px auto 28px;
+}
+
+.sidebar {
+  position: sticky;
+  top: max(10px, env(safe-area-inset-top));
+  z-index: 20;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) minmax(150px, 180px);
+  align-items: center;
+  gap: 14px;
+  height: auto;
+  padding: 12px 14px;
+  border-radius: 28px;
+}
+
+.brand p {
+  white-space: nowrap;
+}
+
+.view-tabs {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.view-tab {
+  min-height: 46px;
+  padding: 10px 12px;
+  text-align: center;
+}
+
+.day-card {
+  margin: 0;
+  padding: 10px 12px;
+}
+
+.day-card strong {
+  margin: 4px 0 7px;
+  font-size: 1.55rem;
+}
+
+.workspace {
+  min-height: auto;
+}
+
+@media (max-width: 1366px) {
+  .progress-ring {
+    width: min(100%, 280px);
+  }
+
+  .time-stack span {
+    font-size: clamp(2.25rem, 4vw, 3rem);
+  }
+}
+
+@media (min-width: 900px) {
+  .timer-layout,
+  .pomodoro-grid,
+  .storage-grid {
+    grid-template-columns: minmax(0, 1.08fr) minmax(280px, 0.92fr);
+  }
+}
+
+@media (max-width: 760px) {
+  .sidebar {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .brand {
+    justify-content: center;
+  }
+
+  .day-card {
+    display: grid;
+    grid-template-columns: auto auto minmax(120px, 1fr);
+    align-items: center;
+    gap: 10px;
+  }
+
+  .day-card strong {
+    margin: 0;
+  }
+}
+
+@media (max-width: 520px) {
+  .app-shell {
+    width: min(100% - 18px, 560px);
+    margin-top: 9px;
+  }
+
+  .sidebar {
+    border-radius: 22px;
+    padding: 12px;
+  }
+
+  .view-tabs {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .day-card {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+}
