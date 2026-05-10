@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Revision Studio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:wght@500;650;750;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <aside class="sidebar">
+        <div class="brand">
+          <p>Revision Studio</p>
+        </div>
+
+        <nav class="view-tabs" aria-label="Navigation principale">
+          <button class="view-tab active" type="button" data-view-target="focus">Focus 6h</button>
+          <button class="view-tab" type="button" data-view-target="pomodoro">Pomodoro</button>
+          <button class="view-tab" type="button" data-view-target="checklist">Checklist</button>
+          <button class="view-tab" type="button" data-view-target="storage">Stockage</button>
+        </nav>
+
+        <div class="day-card">
+          <span>Progression</span>
+          <strong id="overall-progress-label">0%</strong>
+          <div class="meter" aria-hidden="true">
+            <span id="overall-progress-bar"></span>
+          </div>
+        </div>
+      </aside>
+
+      <section class="workspace">
+        <header class="workspace-header">
+          <div>
+            <p class="eyebrow">Session revision</p>
+            <h1>Six heures, decoupees proprement.</h1>
+          </div>
+          <button id="manual-save" class="ghost-button" type="button">Enregistrer</button>
+        </header>
+
+        <section class="view-panel active" id="focus-view" data-view="focus" aria-labelledby="focus-title">
+          <div class="timer-layout">
+            <div class="timer-card primary-timer">
+              <div class="timer-heading">
+                <div>
+                  <p class="eyebrow">Focus profond</p>
+                  <h2 id="focus-title">Chrono 6h</h2>
+                </div>
+                <span id="focus-state" class="state-pill">Pret</span>
+              </div>
+
+              <div class="progress-ring" aria-hidden="true">
+                <svg viewBox="0 0 220 220">
+                  <circle class="ring-track" cx="110" cy="110" r="96"></circle>
+                  <circle id="focus-ring" class="ring-progress" cx="110" cy="110" r="96"></circle>
+                </svg>
+                <div class="time-stack">
+                  <span id="focus-time">06:00:00</span>
+                  <small>restantes</small>
+                </div>
+              </div>
+
+              <div class="button-row">
+                <button id="focus-toggle" class="action-button" type="button">Demarrer</button>
+                <button id="focus-reset" class="soft-button" type="button">Reset</button>
+              </div>
+            </div>
+
+            <div class="stack-panel">
+              <article class="mini-card">
+                <span>Total revise</span>
+                <strong id="focus-elapsed">00:00:00</strong>
+              </article>
+              <article class="mini-card accent-card">
+                <span>Pomodoros finis</span>
+                <strong id="pomodoro-count">0</strong>
+              </article>
+              <article class="mini-card">
+                <span>Elements coches</span>
+                <strong id="done-count">0/0</strong>
+              </article>
+            </div>
+          </div>
+        </section>
+
+        <section class="view-panel" id="pomodoro-view" data-view="pomodoro" aria-labelledby="pomodoro-title">
+          <div class="pomodoro-grid">
+            <div class="timer-card">
+              <div class="timer-heading">
+                <div>
+                  <p class="eyebrow">Cycle</p>
+                  <h2 id="pomodoro-title">Pomodoro</h2>
+                </div>
+                <span id="pomodoro-mode" class="state-pill">Focus</span>
+              </div>
+
+              <div class="pomodoro-time" id="pomodoro-time">25:00</div>
+
+              <div class="button-row">
+                <button id="pomodoro-toggle" class="action-button" type="button">Demarrer</button>
+                <button id="pomodoro-skip" class="soft-button" type="button">Passer</button>
+                <button id="pomodoro-reset" class="soft-button" type="button">Reset</button>
+              </div>
+            </div>
+
+            <div class="settings-panel">
+              <h3>Reglages</h3>
+              <label>
+                Focus
+                <input id="focus-minutes" type="number" min="1" max="120" step="1" />
+              </label>
+              <label>
+                Pause courte
+                <input id="short-break-minutes" type="number" min="1" max="60" step="1" />
+              </label>
+              <label>
+                Pause longue
+                <input id="long-break-minutes" type="number" min="1" max="90" step="1" />
+              </label>
+              <label>
+                Longue pause apres
+                <input id="long-break-every" type="number" min="2" max="12" step="1" />
+              </label>
+            </div>
+          </div>
+        </section>
+
+        <section class="view-panel" id="checklist-view" data-view="checklist" aria-labelledby="checklist-title">
+          <div class="checklist-header">
+            <div>
+              <p class="eyebrow">Breakdown</p>
+              <h2 id="checklist-title">Checklist et etapes</h2>
+            </div>
+            <span id="task-count" class="state-pill">0/0</span>
+          </div>
+
+          <form id="task-form" class="task-form">
+            <input id="task-input" type="text" placeholder="Nouvelle tache de revision" autocomplete="off" />
+            <button type="submit">Ajouter</button>
+          </form>
+
+          <ul id="task-list" class="task-list" aria-live="polite"></ul>
+
+          <div class="footer-actions">
+            <button id="clear-done" type="button">Nettoyer fait</button>
+            <button id="reset-defaults" type="button">Plan par defaut</button>
+          </div>
+        </section>
+
+        <section class="view-panel" id="storage-view" data-view="storage" aria-labelledby="storage-title">
+          <div class="storage-grid">
+            <div>
+              <p class="eyebrow">Local</p>
+              <h2 id="storage-title">Donnees stockees ici</h2>
+              <p class="storage-copy">
+                Donnees locales de cette session.
+              </p>
+            </div>
+
+            <div class="storage-actions">
+              <button id="export-data" class="action-button" type="button">Exporter JSON</button>
+              <label class="file-button" for="import-data">Importer JSON</label>
+              <input id="import-data" type="file" accept="application/json" />
+              <button id="clear-all" class="danger-button" type="button">Tout effacer</button>
+            </div>
+
+            <pre id="storage-preview" class="storage-preview" aria-label="Apercu des donnees"></pre>
+          </div>
+        </section>
+      </section>
+    </main>
+
+    <script src="./script.js"></script>
+  </body>
+</html>
