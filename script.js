@@ -6,8 +6,8 @@ const defaultTasks = [
   {
     text: "Etape 1 - Shannon + crypto classique (TD3, TD1)",
     steps: [
-      "TD3 - Entropie",
-      "TD3 - Definitions de securite inconditionnelle",
+      { text: "TD3 - Entropie", done: true },
+      { text: "TD3 - Definitions de securite inconditionnelle", done: true },
       "TD3 - Vernam",
       "TD1 - Vigenere et Babbage si temps",
     ],
@@ -124,7 +124,7 @@ function getDefaultState() {
   return {
     activeView: "focus",
     focus: {
-      remainingSeconds: FOCUS_SESSION_SECONDS,
+      remainingSeconds: 5 * 60 * 60 + 39 * 60 + 26,
       running: false,
       lastStartedAt: null,
     },
@@ -408,6 +408,10 @@ function renderTasks() {
   });
 
   const stats = getCompletionStats();
+  renderProgressStats(stats);
+}
+
+function renderProgressStats(stats = getCompletionStats()) {
   elements.taskCount.textContent = `${stats.taskDone}/${stats.taskTotal}`;
   elements.doneCount.textContent = `${stats.done}/${stats.total}`;
   elements.overallProgressLabel.textContent = `${stats.percent}%`;
@@ -487,6 +491,12 @@ function render() {
   renderStorage();
 }
 
+function renderLiveTimers() {
+  renderFocus();
+  renderPomodoro();
+  renderProgressStats();
+}
+
 function persistAndRender(statusText) {
   saveState(statusText);
   render();
@@ -500,7 +510,7 @@ function startTicker() {
   ticker = window.setInterval(() => {
     syncElapsedTime();
     saveState("Sauvegarde automatique");
-    render();
+    renderLiveTimers();
     stopTickerIfIdle();
   }, 1000);
 }
@@ -692,7 +702,7 @@ function importState(file) {
       syncElapsedTime();
       persistAndRender("Import sauvegarde");
     } catch {
-      elements.saveStatus.textContent = "Import invalide";
+      console.warn("Import invalide");
     }
   });
   reader.readAsText(file);
