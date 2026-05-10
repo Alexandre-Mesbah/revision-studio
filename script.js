@@ -4,20 +4,56 @@ const RING_LENGTH = 2 * Math.PI * 96;
 
 const defaultTasks = [
   {
-    text: "Lister les chapitres a revoir",
-    steps: ["Identifier les priorites", "Noter les notions floues"],
+    text: "Etape 1 - Shannon + crypto classique (TD3, TD1)",
+    steps: [
+      "TD3 - Entropie",
+      "TD3 - Definitions de securite inconditionnelle",
+      "TD3 - Vernam",
+      "TD1 - Vigenere et Babbage si temps",
+    ],
   },
   {
-    text: "Relire le cours actif",
-    steps: ["Surligner les formules", "Resumer en 5 lignes"],
+    text: "Etape 2 - Securite calculatoire + chiffrements par blocs (TD4, TD5)",
+    steps: [
+      "TD4 - IND-CPA",
+      "TD4 - Reductions",
+      "TD4 - Oracles",
+      "TD5 - SPN",
+      "TD5 - Confusion et diffusion",
+      "TD5 - DES/AES en schema general",
+    ],
   },
   {
-    text: "Refaire les exercices rates",
-    steps: ["Refaire sans correction", "Comparer avec le corrige"],
+    text: "Etape 3 - Hachage + MACs + chiffrement authentifie (TD7)",
+    steps: [
+      "Merkle-Damgard",
+      "Padding",
+      "HMAC",
+      "CBC-MAC",
+      "Modes CTR/CBC/CFB",
+      "Encrypt-then-MAC",
+    ],
   },
   {
-    text: "Faire un mini test sans notes",
-    steps: ["Chronometrer 20 minutes", "Corriger les erreurs"],
+    text: "Etape 4 - Crypto asymetrique (TD8, TD9, TD11)",
+    steps: [
+      "Arithmetique modulaire",
+      "Euclide etendu",
+      "phi(n) et Euler",
+      "Diffie-Hellman",
+      "El-Gamal",
+      "RSA complet",
+      "Signatures RSA naive et Hash-and-Sign",
+      "DSA",
+    ],
+  },
+  {
+    text: "Etape 5 - Certificats + apercu final (TD11 theorie)",
+    steps: [
+      "PKI",
+      "Chaine de confiance",
+      "Pourquoi les MACs ne suffisent pas pour les signatures",
+    ],
   },
 ];
 
@@ -115,7 +151,7 @@ function normalizeTasks(tasks, fallbackTasks) {
     return fallbackTasks;
   }
 
-  return tasks.map((task) => ({
+  const normalized = tasks.map((task) => ({
     id: task.id || createId(),
     text: String(task.text || "Tache sans titre"),
     done: Boolean(task.done),
@@ -127,6 +163,19 @@ function normalizeTasks(tasks, fallbackTasks) {
         }))
       : [],
   }));
+
+  return isLegacyStarterPlan(normalized) ? fallbackTasks : normalized;
+}
+
+function isLegacyStarterPlan(tasks) {
+  const legacyTitles = new Set([
+    "Lister les chapitres a revoir",
+    "Relire le cours actif",
+    "Refaire les exercices rates",
+    "Faire un mini test sans notes",
+  ]);
+
+  return tasks.length === 4 && tasks.every((task) => legacyTitles.has(task.text) && !task.done);
 }
 
 function loadState() {
